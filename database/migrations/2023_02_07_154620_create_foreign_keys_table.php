@@ -13,9 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('foreign_keys', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('books', function (Blueprint $table) {
+            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('publisher_id')->references('id')->on('publishers');
+        });
+
+        Schema::table('fines', function (Blueprint $table) {
+            $table->foreign('borrow_id')->references('id')->on('borrows');
+        });
+
+        Schema::table('borrows', function (Blueprint $table) {
+            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

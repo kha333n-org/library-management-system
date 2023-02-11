@@ -11,6 +11,15 @@ use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @var int $id
+ * @var string $name
+ * @var string $email
+ * @var string $address
+ * @var string $phone_number
+ * @var boolean $is_active
+ * @var string $profile_photo_path
+ */
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -29,6 +38,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone_number',
+        'address',
+        'is_active',
     ];
 
     /**

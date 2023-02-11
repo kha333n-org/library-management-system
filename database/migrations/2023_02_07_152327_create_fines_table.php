@@ -15,7 +15,6 @@ return new class extends Migration {
         Schema::create('fines', function (Blueprint $table) {
             $table->id();
 
-            //TODO: Create Borrow Table
             $table->unsignedBigInteger('borrow_id');
 
             $table->integer('fine_amount');

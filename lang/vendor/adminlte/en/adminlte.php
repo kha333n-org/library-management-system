@@ -4,6 +4,8 @@ return [
 
     'full_name' => 'Full name',
     'email' => 'Email',
+    'address' => 'Address',
+    'phone' => '03401234567',
     'password' => 'Password',
     'retype_password' => 'Retype password',
     'remember_me' => 'Remember Me',
