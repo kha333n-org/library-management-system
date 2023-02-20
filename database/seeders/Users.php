@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -17,7 +16,7 @@ class Users extends Seeder
      */
     public function run()
     {
-        $role = Role::findByName('Admin', 'sanctum');
+        $role = Role::findById(1, 'sanctum');
 
         $user = User::query()->create(
             [
@@ -30,6 +29,6 @@ class Users extends Seeder
             ]
         );
 
-//        $user->assignRole($role);
+        $user->assignRole($role);
     }
 }

@@ -8,4 +8,11 @@
 
 @section('content')
 
+    {!! $dataTable->table( ['class' => 'table table-striped table-bordered', 'style' => 'width:100%'],
+        true) !!}
+
+@stop
+
+@section('js')
+    {!! $dataTable->scripts() !!}
 @stop
