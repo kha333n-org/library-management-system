@@ -6,6 +6,8 @@
     </button>
     <div class="dropdown-menu">
         <a class="dropdown-item" href="{{ route('users.edit', $user->id) }}">Edit</a>
-        <a class="dropdown-item" href="#">Delete</a>
+        <button type="button" class="dropdown-item" data-id="{{ $user->id }}"
+                onclick="$(this).deleteUser()">Delete
+        </button>
     </div>
 </div>

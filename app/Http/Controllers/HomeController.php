@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Contracts\Support\Renderable;
+
 class HomeController extends Controller
 {
     /**
@@ -17,10 +20,13 @@ class HomeController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
-        return view('dashboard');
+        $totalUsers = User::query()->count();
+        $activeUsers = User::query()->where('is_active', true)->count();
+        $inActiveUsers = User::query()->where('is_active', false)->count();
+        return view('dashboard', compact('totalUsers', 'activeUsers', 'inActiveUsers'));
     }
 }

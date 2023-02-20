@@ -6,7 +6,7 @@ use App\Utils\Permissions;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UserUpdateRequest extends FormRequest
+class StoreUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +15,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (Auth::user()->can(Permissions::$EDIT_USERS))
+        if (Auth::user()->can(Permissions::$CREATE_USERS))
             return true;
         else
             return false;
@@ -31,8 +31,9 @@ class UserUpdateRequest extends FormRequest
         return [
             'name' => 'required|min:3|max:30',
             'address' => 'required|min:5|max:100',
-            'phone_number' => ['required', 'regex:/^(\+92|0)(3\d{2}|4[1-9]\d|5[0-6]\d|7[0-1]\d|9[0-5]\d)\d{7}$/'],
             'status' => 'required',
+            'email' => 'required|email|unique:users',
+            'phone_number' => ['required', 'regex:/^(\+92|0)(3\d{2}|4[1-9]\d|5[0-6]\d|7[0-1]\d|9[0-5]\d)\d{7}$/'],
         ];
     }
 

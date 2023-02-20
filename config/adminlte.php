@@ -319,7 +319,7 @@ return [
             'text' => 'Users',
             'url' => 'admin/users',
             'icon' => 'fa fa-user',
-            'active' => ['admin/users', 'regex:@^admin/users/[0-9]+$@', 'regex:@^admin/users/[0-9]/edit+$@'],
+            'active' => ['admin/users', 'admin/users/create', 'regex:@^admin/users/[0-9]+$@', 'regex:@^admin/users/[0-9]/edit+$@'],
             'can' => Permissions::$LIST_USERS,
         ],
 //        [
@@ -482,7 +482,7 @@ return [
                 [
                     'type' => 'js',
                     'asset' => true,
-                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
+                    'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
             ],
         ],
