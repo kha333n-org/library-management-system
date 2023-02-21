@@ -14,4 +14,5 @@ class Permissions
     public static string $VIEW_USERS = 'View Users';
     public static string $EDIT_USERS = 'Edit Users';
     public static string $DELETE_USERS = 'Delete Users';
+    public static string $MANAGE_ROLES = 'Manage Roles';
 }

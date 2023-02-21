@@ -6,6 +6,7 @@
  */
 
 
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\Users\UserController;
 use App\Utils\Permissions;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ Route::prefix('admin')
 
         Route::get('users/{user}', [UserController::class, 'view'])
             ->can(Permissions::$VIEW_USERS)
-            ->name('users.view');
+            ->name('users.show');
 
         Route::get('users/{user}/edit', [UserController::class, 'edit'])
             ->can(Permissions::$VIEW_USERS)
@@ -39,5 +40,7 @@ Route::prefix('admin')
         Route::delete('users/{user}', [UserController::class, 'destroy'])
             ->can(Permissions::$DELETE_USERS)
             ->name('users.destroy');
+
+        Route::resource('roles', RolesController::class);
     });
 

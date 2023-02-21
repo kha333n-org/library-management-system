@@ -84,4 +84,9 @@ class User extends Authenticatable
             return true;
         }
     }
+
+    public function adminlte_image()
+    {
+        return $this->profile_photo_path;
+    }
 }

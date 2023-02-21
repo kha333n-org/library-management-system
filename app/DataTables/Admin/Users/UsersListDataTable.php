@@ -94,6 +94,7 @@ class UsersListDataTable extends DataTable
             Column::make('updated_at'),
             Column::computed('action')
                 ->exportable(false)
+                ->width(130)
                 ->printable(false),
         ];
     }

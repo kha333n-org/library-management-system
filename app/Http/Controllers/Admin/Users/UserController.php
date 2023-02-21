@@ -23,6 +23,7 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        session()->put('url.intended', url()->previous());
         return view('admin.users.edit', compact('user'));
     }
 
@@ -34,7 +35,7 @@ class UserController extends Controller
         $user->is_active = $request->get('status');
         $user->save();
 
-        return redirect()->route('users.view', $user->id)
+        return redirect()->intended()
             ->with('type', 'success')
             ->with('message', 'User updated successfully!');
     }

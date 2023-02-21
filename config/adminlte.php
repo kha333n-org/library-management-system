@@ -66,7 +66,7 @@ return [
     */
 
     'logo' => '<b>LMS</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'vendor/adminlte/dist/img/logo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
@@ -88,8 +88,8 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'Auth Logo',
+            'path' => 'vendor/adminlte/dist/img/logo.png',
+            'alt' => 'LMS',
             'class' => '',
             'width' => 50,
             'height' => 50,
@@ -111,10 +111,10 @@ return [
     'preloader' => [
         'enabled' => true,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/lms.png',
             'alt' => 'AdminLTE Preloader Image',
-            'effect' => 'animation__shake',
-            'width' => 60,
+            'effect' => 'animation_wobble',
+            'width' => 200,
             'height' => 60,
         ],
     ],
@@ -132,7 +132,7 @@ return [
     */
 
     'usermenu_enabled' => true,
-    'usermenu_header' => true,
+    'usermenu_header' => false,
     'usermenu_header_class' => 'bg-primary',
     'usermenu_image' => false,
     'usermenu_desc' => false,
@@ -152,9 +152,9 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
-    'layout_fixed_footer' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -215,7 +215,7 @@ return [
     'sidebar_mini' => 'lg',
     'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
-    'sidebar_collapse_remember' => false,
+    'sidebar_collapse_remember' => true,
     'sidebar_collapse_remember_no_transition' => true,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
@@ -234,7 +234,7 @@ return [
     |
     */
 
-    'right_sidebar' => true,
+    'right_sidebar' => false,
     'right_sidebar_icon' => 'fas fa-cogs',
     'right_sidebar_theme' => 'dark',
     'right_sidebar_slide' => true,
@@ -322,6 +322,15 @@ return [
             'active' => ['admin/users', 'admin/users/create', 'regex:@^admin/users/[0-9]+$@', 'regex:@^admin/users/[0-9]/edit+$@'],
             'can' => Permissions::$LIST_USERS,
         ],
+
+        [
+            'text' => 'Roles',
+            'url' => 'admin/roles',
+            'icon' => 'fa fa-role',
+            'active' => ['admin/roles', 'admin/roles/create', 'regex:@^admin/roles/[0-9]+$@', 'regex:@^admin/roles/[0-9]/edit+$@'],
+            'can' => Permissions::$MANAGE_ROLES,
+        ],
+
 //        [
 //            'text' => 'pages',
 //            'url' => 'admin/pages',
