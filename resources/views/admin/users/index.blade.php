@@ -1,3 +1,4 @@
+@php use App\Utils\Permissions; @endphp
 @extends('adminlte::page')
 
 @section('title', 'Users List')
@@ -25,10 +26,11 @@
     <div class="mt-2 card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h1 class="m-0 text-dark">Users List</h1>
-
-            <a href="{{ route('users.create') }}" class="btn btn-primary ml-auto" title="New User">
-                <i class="material-icons"></i> New User
-            </a>
+            @can(Permissions::$CREATE_USERS)
+                <a href="{{ route('users.create') }}" class="btn btn-primary ml-auto" title="New User">
+                    <i class="material-icons"></i> New User
+                </a>
+            @endcan
         </div>
 
         {!! $dataTable->table(['class' => 'table table-striped table-bordered', 'style' => 'width:100%'], true) !!}
@@ -67,7 +69,7 @@
                                     showConfirmButton: false,
                                     timer: 1500
                                 }).then(function () {
-                                    window.location.href = '{{ route('users.index') }}';
+                                    $('#users-table').DataTable().ajax.reload();
                                 });
                             } else {
                                 Swal.fire({

@@ -29,7 +29,14 @@ class RoleUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:roles|min:3|max:15'
+            'name' => 'required|min:3|max:15'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name' => 'same name already used',
         ];
     }
 }

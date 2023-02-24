@@ -45,5 +45,57 @@
                 $('.alert').alert('close');
             }, 10000);
         });
+
+        $.fn.deleteRole = function () {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let id = $(this).data('id');
+                    $.ajax({
+                        type: 'DELETE',
+                        url: '{{ url('admin/roles') }}/' + id,
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                        },
+                        success: function (response) {
+                            if (response.type === 'success') {
+                                Swal.fire({
+                                    title: 'Role deleted!',
+                                    text: response.message,
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                }).then(function () {
+                                    $('#role-table').DataTable().ajax.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: 'Error deleting role!',
+                                    text: response.message,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                });
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            Swal.fire({
+                                title: 'Error deleting role!',
+                                text: xhr.responseText,
+                                icon: 'error',
+                                allowOutsideClick: false,
+                                showConfirmButton: true,
+                            });
+                        }
+                    });
+                }
+            });
+        }
     </script>
 @endsection

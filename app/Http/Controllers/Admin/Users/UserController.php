@@ -7,16 +7,43 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\StoreUserRequest;
 use App\Http\Requests\Admin\Users\UserUpdateRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
+
+
+    public function viewRoles(User $user)
+    {
+        session()->put('url.intended', url()->previous());
+
+        $roles = Role::all();
+        $userRoles = $user->roles;
+        return view('admin.users.roles', compact('user', 'roles', 'userRoles'));
+    }
+
+    public function updateRoles(User $user, Request $request)
+    {
+        $user->roles()->sync($request->input('roles'));
+
+        return redirect()->intended()
+            ->with('type', 'success')
+            ->with('message', 'User roles updated successfully!');
+    }
+
     public function index(UsersListDataTable $dataTable)
     {
         return $dataTable->render('admin.users.index');
     }
 
-    public function view(User $user)
+    public function show(User $user)
     {
         return view('admin.users.view', compact('user'));
     }
@@ -77,7 +104,7 @@ class UserController extends Controller
             'is_active' => $request->get('status'),
         ]);
 
-        return redirect()->route('users.view', $user->id)
+        return redirect()->route('users.show', $user->id)
             ->with('type', 'success')
             ->with('message', 'User created successfully! User must reset its password first to access account.');
     }

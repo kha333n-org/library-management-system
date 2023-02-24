@@ -10,6 +10,7 @@
 
     <form action="{{ route('users.update', $user->id) }}" id="edit-user-form" class="needs-validation" novalidate
           method="post">
+        @method('put')
         @csrf
         <div class="form-group">
             <label for="name">Name:</label>

@@ -1,4 +1,4 @@
-@php use Illuminate\Support\Carbon; @endphp
+@php use App\Utils\Permissions;use Illuminate\Support\Carbon; @endphp
 @extends('adminlte::page')
 
 @section('title', 'View User')
@@ -25,11 +25,20 @@
     <div class="card shadow-sm">
         <div class="card-header">
             User Details
-            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary float-right" title="Edit">
-                <i
-                    class="material-icons">Edit</i></a>
-            <a href="#" class="btn btn-danger float-right mr-2" title="Edit" id="delete-user">
-                <i class="material-icons">Delete</i></a>
+            @can(Permissions::$EDIT_USERS)
+                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary float-right" title="Edit">
+                    <i
+                        class="material-icons">Edit</i></a>
+            @endcan
+            @can(Permissions::$EDIT_USERS)
+                <a href="{{ route('users.roles', $user->id) }}" class="btn btn-primary float-right mr-2" title="Roles">
+                    <i
+                        class="material-icons">Roles</i></a>
+            @endcan
+            @can(Permissions::$DELETE_USERS)
+                <a href="#" class="btn btn-danger float-right mr-2" title="Edit" id="delete-user">
+                    <i class="material-icons">Delete</i></a>
+            @endcan
         </div>
         <div class="card-body">
             <div class="row">
@@ -40,6 +49,12 @@
                     <p>{{ $user->email }}</p>
                     <h5>Address:</h5>
                     <p>{{ $user->address }}</p>
+                    <h5>Roles:</h5>
+                    <p>
+                        @foreach($user->roles as $role)
+                            <span class="badge badge-primary">{{ $role->name }}</span>
+                        @endforeach
+                    </p>
                 </div>
                 <div class="col-sm-6">
                     <h5>Phone Number:</h5>
@@ -127,3 +142,5 @@
     </script>
 
 @stop
+
+

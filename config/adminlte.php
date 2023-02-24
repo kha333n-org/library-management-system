@@ -313,13 +313,13 @@ return [
             'url' => '/',
             'icon' => 'fa fa-home',
         ],
-        ['header' => 'Users Management'],
+        ['header' => 'Users Management', 'can' => Permissions::$VIEW_USERS],
 
         [
             'text' => 'Users',
             'url' => 'admin/users',
             'icon' => 'fa fa-user',
-            'active' => ['admin/users', 'admin/users/create', 'regex:@^admin/users/[0-9]+$@', 'regex:@^admin/users/[0-9]/edit+$@'],
+            'active' => ['admin/users', 'admin/users/create', 'regex:@^admin/users/[0-9]+$@', 'regex:@^admin/users/roles/[0-9]+$@', 'regex:@^admin/users/[0-9]/edit+$@'],
             'can' => Permissions::$LIST_USERS,
         ],
 
@@ -496,7 +496,7 @@ return [
             ],
         ],
         'Pace' => [
-            'active' => true,
+            'active' => false,
             'files' => [
                 [
                     'type' => 'css',

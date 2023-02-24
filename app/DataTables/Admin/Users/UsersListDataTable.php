@@ -16,7 +16,7 @@ class UsersListDataTable extends DataTable
      * Build DataTable class.
      *
      * @param QueryBuilder $query Results from query() method.
-     * @return \Yajra\DataTables\EloquentDataTable
+     * @return EloquentDataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
@@ -30,18 +30,50 @@ class UsersListDataTable extends DataTable
             ->editColumn('updated_at', function ($user) {
                 return Carbon::parse($user->updated_at)->diffForHumans();
             })
+            ->addColumn('roles', function (User $user) {
+                $rolesHtml = '';
+                $roles = $user->roles->take(3); // get the first 3 roles
+                foreach ($roles as $role) {
+                    $rolesHtml .= '<span class="badge badge-primary">' . $role->name . '</span> ';
+                }
+                if ($user->roles->count() > 3) {
+                    $rolesHtml .= '<button type="button" class="btn btn-link" data-toggle="modal" data-target="#rolesModal-' . $user->id . '">...</button>';
+                }
+                $rolesHtml .= '<div class="modal fade" id="rolesModal-' . $user->id . '" tabindex="-1" role="dialog" aria-labelledby="rolesModalLabel-' . $user->id . '" aria-hidden="true">';
+                $rolesHtml .= '<div class="modal-dialog" role="document">';
+                $rolesHtml .= '<div class="modal-content">';
+                $rolesHtml .= '<div class="modal-header">';
+                $rolesHtml .= '<h5 class="modal-title" id="rolesModalLabel-' . $user->id . '">Roles for ' . $user->name . '</h5>';
+                $rolesHtml .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+                $rolesHtml .= '<span aria-hidden="true">&times;</span>';
+                $rolesHtml .= '</button>';
+                $rolesHtml .= '</div>';
+                $rolesHtml .= '<div class="modal-body">';
+                foreach ($user->roles as $role) {
+                    $rolesHtml .= '<span class="badge badge-primary">' . $role->name . '</span> ';
+                }
+                $rolesHtml .= '</div>';
+                $rolesHtml .= '<div class="modal-footer">';
+                $rolesHtml .= '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+//                $rolesHtml .= '<a href="' . route('users.roles', $user->id) . '" class="btn btn-primary">View all roles</a>';
+                $rolesHtml .= '</div>';
+                $rolesHtml .= '</div>';
+                $rolesHtml .= '</div>';
+                $rolesHtml .= '</div>';
+                return $rolesHtml;
+            })
             ->editColumn('is_active', function (User $user) {
                 return $user->is_active ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">In-Active</span>';
             })
-            ->rawColumns(['is_active'])
+            ->rawColumns(['is_active', 'roles'])
             ->addIndexColumn();
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Models\UsersList $model
-     * @return \Illuminate\Database\Eloquent\Builder
+     * @param User $model
+     * @return QueryBuilder
      */
     public function query(User $model): QueryBuilder
     {
@@ -51,7 +83,7 @@ class UsersListDataTable extends DataTable
     /**
      * Optional method if you want to use html builder.
      *
-     * @return \Yajra\DataTables\Html\Builder
+     * @return HtmlBuilder
      */
     public function html(): HtmlBuilder
     {
@@ -89,6 +121,7 @@ class UsersListDataTable extends DataTable
             Column::make('email'),
             Column::make('address'),
             Column::make('phone_number'),
+            Column::computed('roles'),
             Column::make('is_active'),
             Column::make('created_at'),
             Column::make('updated_at'),

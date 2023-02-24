@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -52,9 +52,11 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'numeric'],
+            'phone' => ['required', 'regex:/^(\+92|0)(3\d{2}|4[1-9]\d|5[0-6]\d|7[0-1]\d|9[0-5]\d)\d{7}$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], [
+            'phone' => 'Please enter a valid phone number, eg: +923401234567 OR 03401234567'
         ]);
     }
 
@@ -62,7 +64,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param array $data
-     * @return \App\Models\User
+     * @return User
      */
     protected function create(array $data)
     {
